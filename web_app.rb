@@ -8,7 +8,6 @@ token = ENV['GITHUB_TOKEN']
 org_name = ENV['ORGANIZATION_NAME']
 team_name = ENV['TEAM_NAME']
 background_choice = ENV['BACKGROUND_COLOR']
-avatar_org = 'innovaccion-virtual'
 
 if background_choice == 'green'
     background_css = "/css/background_colors/green.css"
@@ -38,9 +37,9 @@ def user_exists?(client, user)
   return true
 end
 
-def get_org_avatar_url(client, avatar_org)
+def get_org_avatar_url(client, org_name)
   begin
-    org = client.user(avatar_org)
+    org = client.user(org_name)
   rescue Octokit::NotFound
     return nil
   end
