@@ -86,7 +86,7 @@ l = Slim::Template.new { @layout }
 # ROUTES #
 
 get "/" do
-  slim l.render(Object.new, :avatar => avatar, :org_name => org_name, :background_css => background_css)
+  slim l.render(Object.new, :avatar => avatar, :org_name => org_name, :team_name => team_name, :background_css => background_css)
 end
 
 post "/add" do
@@ -95,13 +95,13 @@ post "/add" do
     if team.nil?
       # team was blank or could not be found, just add user to org
       client.update_organization_membership(org_name, :user => params["github-user"])
-      "Invitación enviada para unirse a: '" + org_name + "', Revisa tu Correo"
+      "已发送加入'" + org_name + "'的确认链接，请查看你的邮箱。"
     else
       # team_id valid so invite member directly to org's team
       client.add_team_membership(team.id, params["github-user"])      
-      "Invitación enviada para unirse a: '" + org_name + "' y el equipo: '" + team_name + "', Revisa tu Correo"
+      "已发送加入'" + org_name + "'的'" + team_name + "'的确认链接，请查看你的邮箱。"
     end
   else
-    "Usuario no encontrado. Por favor revisa nuevamente."
+    "未找到该用户，请检查用户名。"
   end
 end
